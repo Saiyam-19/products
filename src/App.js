@@ -1,27 +1,33 @@
-import React from 'react';
-import data from './data.json';
+import React, { useState, useEffect } from 'react';
+import Product from './Product';
 import './styles.css';
+import { ReactComponent as SpinnerIcon } from './spinner.svg';
 
 function App() {
-  // const products = props.products;
-  // console.log(products);
-  return(
-    <div className='container'>
-      <div className="product-list">
- { data.products.map(item =>(
-    // console.log(item.images)
-      <div className="product-item" id="template">
-        <img src={item.images[0]} className="product-image" />
-        <div className="product-title">{item.title}</div>
-        <div className="product-category">{item.category}</div>
-        <div className="product-price">${item.price}</div>
-        <div className="product-rating">{item.rating}</div>
-      </div>
-    
-  ))}
-  </div>
-     </div>
-  )
+  const [products, setProducts] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // setIsLoaded(false);
+    fetch('https://dummyjson.com/products')
+      .then(response => response.json())
+      .then(data => {
+        setProducts(data);
+        setIsLoaded(true);
+      });
+  }, []);
+
+  return (
+    <>
+      {!isLoaded ? (
+        <div className="spinner">
+          <SpinnerIcon />
+        </div>
+      ) : (
+        <Product products={products} />
+      )}
+    </>
+  );
 }
 
 export default App;
