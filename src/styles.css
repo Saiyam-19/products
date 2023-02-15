@@ -1,4 +1,5 @@
 .container {
+  margin-top: 30px;
     width: 80%;
     margin: 0 auto;
     background-color: #fff;
@@ -54,5 +55,12 @@
       transform: rotate(360deg);
     }
   }
-  
+.search{
+  text-align: center;
+  /* font-size: 30px; */
+  margin-bottom:30px;
+}  
+#searcg-input{
+  margin-bottom: 100px;
+}
   

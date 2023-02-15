@@ -6,6 +6,9 @@ function Product(data) {
   // const products = props.products;
   console.log();
   return (
+    <div className="search">
+    <label>Search:</label>
+    <input type="text" id="search-input"/>
     <div className="container">
       <div className="product-list">
         {data.products.products?.map((item) => (
@@ -19,7 +22,9 @@ function Product(data) {
         ))}
       </div>
     </div>
+    </div>
   );
 }
+
 
 export default Product;
