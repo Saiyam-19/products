@@ -1,27 +1,63 @@
-import React from 'react';
-import data from './data.json';
+import React, { useState, useEffect } from 'react';
+import Product from './Product';
 import './styles.css';
+import { ReactComponent as SpinnerIcon } from './spinner.svg';
 
 function App() {
-  // const products = props.products;
-  // console.log(products);
-  return(
-    <div className='container'>
-      <div className="product-list">
- { data.products.map(item =>(
-    // console.log(item.images)
-      <div className="product-item" id="template">
-        <img src={item.images[0]} className="product-image" />
-        <div className="product-title">{item.title}</div>
-        <div className="product-category">{item.category}</div>
-        <div className="product-price">${item.price}</div>
-        <div className="product-rating">{item.rating}</div>
-      </div>
-    
-  ))}
-  </div>
-     </div>
-  )
+  const [products, setProducts] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://dummyjson.com/products');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setProducts(data);
+        setIsLoaded(true);
+        handleSearch();
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  function handleSearch() {
+    document
+      .querySelector("#search-input")
+      .addEventListener("input", function () {
+        var searchTerm = this.value.toLowerCase();
+        var productItems = document.querySelectorAll(".product-item");
+        for (var i = 0; i < productItems.length; i++) {
+          var productTitle = productItems[i]
+            .querySelector(".product-title")
+            .innerText.toLowerCase();
+            var productCategory = productItems[i]
+            .querySelector(".product-category")
+            .innerText.toLowerCase();
+          if (productTitle.indexOf(searchTerm) === -1 && productCategory.indexOf(searchTerm)=== -1) {
+            productItems[i].style.display = "none";
+          } else {
+            productItems[i].style.display = "block";
+          }
+        }
+      });
+  }
+
+  return (
+    <>
+      {!isLoaded ? (
+        <div className="spinner">
+          <SpinnerIcon />
+        </div>
+      ) : (
+        <Product products={products} />
+      )}
+    </>
+  );
 }
 
 export default App;

@@ -1,4 +1,5 @@
 .container {
+  margin-top: 30px;
     width: 80%;
     margin: 0 auto;
     background-color: #fff;
@@ -36,4 +37,30 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
+  .spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .spinner svg {
+    animation: rotate 2s linear infinite;
+    width: 50px;
+    height: 50px;
+  }
+  
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+.search{
+  text-align: center;
+  /* font-size: 30px; */
+  margin-bottom:30px;
+}  
+#searcg-input{
+  margin-bottom: 100px;
+}
   
